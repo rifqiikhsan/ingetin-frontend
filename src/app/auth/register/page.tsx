@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Loader, Lock, Mail, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
-import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
 import { Label } from "@/src/components/ui/label";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
+import { useAuth } from "@/src/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/src/hooks/use-toast";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,15 +21,15 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const { register } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError("");
   };
 
   const validateForm = () => {
@@ -37,19 +39,35 @@ export default function RegisterPage() {
       !formData.password ||
       !formData.confirmPassword
     ) {
-      setError("Semua field harus diisi");
+      toast({
+        title: "Validasi Gagal",
+        description: "Semua field harus diisi.",
+        variant: "destructive"
+      });
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError("Password dan konfirmasi password tidak cocok");
+      toast({
+        title: "Password Tidak Cocok",
+        description: "Password dan konfirmasi password tidak sama.",
+        variant: "destructive"
+      });
       return false;
     }
     if (formData.password.length < 8) {
-      setError("Password minimal 8 karakter");
+      toast({
+        title: "Password Terlalu Pendek",
+        description: "Password minimal 8 karakter.",
+        variant: "destructive"
+      });
       return false;
     }
     if (!agreedToTerms) {
-      setError("Anda harus menyetujui syarat dan ketentuan");
+      toast({
+        title: "Syarat Belum Disetujui",
+        description: "Anda harus menyetujui syarat dan ketentuan.",
+        variant: "destructive"
+      });
       return false;
     }
     return true;
@@ -60,29 +78,60 @@ export default function RegisterPage() {
     if (!validateForm()) return;
 
     setLoading(true);
-    setError("");
-    setSuccess("");
 
-    // Simulasi request registrasi
-    setTimeout(() => {
-      setSuccess("Registrasi berhasil! Silakan login.");
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+    try {
+      const response = await register({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword
       });
-      setAgreedToTerms(false);
+
+      if (response.success) {
+        toast({
+          title: "Registrasi Berhasil 🎉",
+          description: "Akun Anda berhasil dibuat. Silakan login."
+        });
+
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: ""
+        });
+        setAgreedToTerms(false);
+
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 1000);
+      } else {
+        toast({
+          title: "Registrasi Gagal",
+          description: response.message || "Terjadi kesalahan.",
+          variant: "destructive"
+        });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description: err.message || "Terjadi kesalahan saat registrasi.",
+        variant: "destructive"
+      });
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   const handleGoogleRegister = () => {
-    console.log("Daftar dengan Google...");
+    toast({
+      title: "Coming Soon",
+      description: "Fitur daftar dengan Google belum tersedia."
+    });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -94,27 +143,13 @@ export default function RegisterPage() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          {error && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertTitle>Gagal</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          {success && (
-            <Alert className="mb-4 bg-green-50 border-green-200">
-              <AlertTitle>Berhasil</AlertTitle>
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
-          )}
-
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Username */}
             <div>
               <Label htmlFor="username">Username</Label>
               <div className="relative mt-2">
                 <User
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={18}
                 />
                 <Input
@@ -134,7 +169,7 @@ export default function RegisterPage() {
               <Label htmlFor="email">Email</Label>
               <div className="relative mt-2">
                 <Mail
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={18}
                 />
                 <Input
@@ -154,7 +189,7 @@ export default function RegisterPage() {
               <Label htmlFor="password">Password</Label>
               <div className="relative mt-2">
                 <Lock
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={18}
                 />
                 <Input
@@ -169,7 +204,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -181,7 +216,7 @@ export default function RegisterPage() {
               <Label htmlFor="confirmPassword">Konfirmasi Password</Label>
               <div className="relative mt-2">
                 <Lock
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={18}
                 />
                 <Input
@@ -196,7 +231,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
                 >
                   {showConfirmPassword ? (
                     <EyeOff size={18} />

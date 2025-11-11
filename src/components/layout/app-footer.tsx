@@ -26,7 +26,7 @@ export function AppFooter() {
       { label: "Karir", href: "#careers" },
       { label: "Kontak", href: "#contact" }
     ],
-    SumberDaya: [
+    Layanan: [
       { label: "Help Center", href: "#help" },
       { label: "Tutorial", href: "#tutorial" },
       { label: "API Docs", href: "#api" },

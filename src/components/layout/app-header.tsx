@@ -1,11 +1,13 @@
 "use client";
 import { Bell, X, Menu } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export function AppHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +24,10 @@ export function AppHeader() {
     { label: "Harga", href: "#pricing" },
     { label: "Kontak", href: "#contact" }
   ];
+
+  const handleDaftar = () => {
+    router.push("/auth/register");
+  };
 
   return (
     <header
@@ -65,7 +71,10 @@ export function AppHeader() {
             <button className="px-5 py-2 text-gray-700 hover:text-primary font-medium transition-colors">
               Masuk
             </button>
-            <button className="px-5 py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
+            <button
+              onClick={handleDaftar}
+              className="px-5 cursor-pointer py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
+            >
               Daftar Gratis
             </button>
           </div>

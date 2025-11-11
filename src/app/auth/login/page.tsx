@@ -1,66 +1,76 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  CheckCircle,
-  AlertCircle,
-  Loader,
-  LogIn
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Loader } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
 import { Card, CardContent } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import { Separator } from "@/src/components/ui/separator";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/src/hooks/use-toast";
+import { LoginRequest } from "@/src/data/dto/request/LoginRequest";
+import { useAuth } from "@/src/hooks/useAuth";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({
+  const { toast } = useToast();
+  const router = useRouter();
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState<LoginRequest>({
     email: "",
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
 
-    // Contoh login simulasi
-    setTimeout(() => {
-      if (
-        formData.email === "admin@example.com" &&
-        formData.password === "123456"
-      ) {
-        setSuccess("Login berhasil! Mengalihkan...");
+    try {
+      const res = await login(formData);
+
+      if (res.success) {
+        toast({
+          title: "Login Berhasil 🎉",
+          description: `Selamat datang kembali, ${res.user?.username}!`
+        });
+
+        console.log();
+
+        router.push("/dashboard");
       } else {
-        setError("Email atau password salah.");
+        toast({
+          title: "Login Gagal",
+          description: res.message || "Periksa kembali kredensial Anda.",
+          variant: "destructive"
+        });
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      toast({
+        title: "Kesalahan Server",
+        description: err.message || "Tidak dapat memproses login.",
+        variant: "destructive"
+      });
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
 
   const handleGoogleLogin = () => {
-    // Di sini nanti integrasi dengan Google OAuth
     console.log("Login dengan Google diklik!");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 p-4">
       <Card className="w-full max-w-md shadow-xl rounded-2xl">
         <CardContent className="p-8">
           <div className="text-center mb-8">
@@ -71,20 +81,6 @@ export default function LoginPage() {
               Masuk ke akun Anda untuk melanjutkan
             </p>
           </div>
-
-          {error && (
-            <div className="mb-4 flex items-start space-x-3 p-3 rounded-lg border border-red-200 bg-red-50">
-              <AlertCircle size={18} className="text-red-600 mt-0.5" />
-              <p className="text-red-700 text-sm">{error}</p>
-            </div>
-          )}
-
-          {success && (
-            <div className="mb-4 flex items-start space-x-3 p-3 rounded-lg border border-green-200 bg-green-50">
-              <CheckCircle size={18} className="text-green-600 mt-0.5" />
-              <p className="text-green-700 text-sm">{success}</p>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>

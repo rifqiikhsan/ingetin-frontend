@@ -80,12 +80,9 @@ export function AppFooter() {
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-9 h-9 bg-white rounded-lg flex items-center justify-center hover:bg-primary hover:text-white    transition-all duration-200"
+                    className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center hover:bg-white hover:text-primary transition-all duration-200"
                   >
-                    <Icon
-                      className="text-primary hover:text-white  "
-                      size={18}
-                    />
+                    <Icon className="text-white hover:text-primary" size={18} />
                   </a>
                 );
               })}

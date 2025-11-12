@@ -1,13 +1,22 @@
 "use client";
+
 import { Bell, X, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Cookies from "js-cookie";
+import { AuthContext } from "@/src/context/AuthContext";
 
 export function AppHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const auth = useContext(AuthContext);
+
+  const user = auth?.user;
+  const setUser = auth?.setUser;
+
+  console.log(user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +36,20 @@ export function AppHeader() {
 
   const handleDaftar = () => {
     router.push("/auth/register");
+  };
+
+  const handleMasuk = () => {
+    router.push("/auth/login");
+  };
+
+  const handleDashboard = () => {
+    router.push("/dashboard");
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("authData");
+    setUser?.(null);
+    router.push("/");
   };
 
   return (
@@ -68,15 +91,37 @@ export function AppHeader() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <button className="px-5 py-2 text-gray-700 hover:text-primary font-medium transition-colors">
-              Masuk
-            </button>
-            <button
-              onClick={handleDaftar}
-              className="px-5 cursor-pointer py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
-            >
-              Daftar Gratis
-            </button>
+            {user ? (
+              <>
+                <button
+                  onClick={handleDashboard}
+                  className="cursor-pointer px-5 py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="px-5 cursor-pointer py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
+                >
+                  Keluar
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleMasuk}
+                  className="px-5 cursor-pointer py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+                >
+                  Masuk
+                </button>
+                <button
+                  onClick={handleDaftar}
+                  className="px-5 cursor-pointer py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
+                >
+                  Daftar Gratis
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -103,12 +148,49 @@ export function AppHeader() {
                 </a>
               ))}
               <div className="pt-3 space-y-2">
-                <button className="w-full px-5 py-2 text-gray-700 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">
-                  Masuk
-                </button>
-                <button className="w-full px-5 py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200">
-                  Daftar Gratis
-                </button>
+                {user ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleDashboard();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full px-5 py-2 text-gray-700 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                    >
+                      Dashboard
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full px-5 py-2 bg-red-500 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleMasuk();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full px-5 py-2 text-gray-700 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                    >
+                      Masuk
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleDaftar();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full px-5 py-2 bg-primary text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200"
+                    >
+                      Daftar Gratis
+                    </button>
+                  </>
+                )}
               </div>
             </nav>
           </div>

@@ -4,10 +4,18 @@ export default async function Home() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="hero mx-auto max-w-6xl py-6 lg:py-12 px-4" id="home">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between text-center lg:text-left gap-y-6 lg:gap-y-0">
+      <section
+        className="hero mx-auto max-w-6xl py-6 lg:py-12 px-4 mt-6"
+        id="home"
+      >
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between text-center lg:text-left gap-y-12 lg:gap-y-0">
           <div className="flex flex-col gap-y-10 w-full lg:w-1/2">
             <div className="flex flex-col gap-y-3">
+              <div className="block mb-2">
+                <span className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-semibold">
+                  ✨ Produktivitas Maksimal
+                </span>
+              </div>
               <h1 className="text-gray font-['Clash_Display'] text-4xl md:text-5xl lg:text-[70px] leading-tight md:leading-tight lg:leading-none">
                 Jangan Lewatkan <br className="hidden md:block" />
                 Deadline Lagi.
@@ -24,13 +32,13 @@ export default async function Home() {
             <div className="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-6 items-center justify-center lg:justify-start">
               <a
                 href="#"
-                className="text-base md:text-lg font-semibold bg-primary text-white py-3 md:py-4 px-8 md:px-10 rounded-full hover:bg-gray"
+                className="text-sm md:text-lg font-semibold bg-primary text-white py-3 md:py-4 px-8 md:px-10 rounded-full hover:bg-gray"
               >
                 Mulai Gratis
               </a>
               <a
                 href="#"
-                className="flex gap-x-2 font-semibold text-primary items-center"
+                className="flex gap-x-2 text-sm md:text-lg font-semibold text-primary items-center"
               >
                 <svg
                   width="25"
@@ -101,11 +109,63 @@ export default async function Home() {
             <Image
               src="/images/ilustrasition_1.png"
               alt="Ilustrasition Image"
-              width={450}
-              height={450}
-              className="object-cover w-full max-w-[450px] h-auto"
+              width={550}
+              height={550}
+              className="object-cover w-full max-w-[550px] h-auto"
               priority
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Fitur Section */}
+      <section
+        className="feature mx-auto max-w-6xl py-6 lg:py-12 px-4"
+        id="features"
+      >
+        <div className="flex flex-col py-8 md:py-12">
+          <h3 className="text-base md:text-lg text-primary font-medium pb-2">
+            Fitur Unggulan Ingetin
+          </h3>
+          <h2 className="text-xl md:text-3xl font-medium leading-relaxed text-gray-700 mb-6 md:mb-10">
+            Fitur yang Membuat Hidup Anda Jauh Lebih Mudah.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-x-16">
+            <div className="flex flex-col gap-y-3 md:gap-y-5 bg-primary p-4 md:p-6 rounded-md shadow-2xl">
+              <p className="text-3xl md:text-4xl text-primary">🎯</p>
+              <div className="flex flex-col">
+                <p className="text-base md:text-lg font-medium leading-loose text-gray-50">
+                  Reminder Otomatis & Terjadwal
+                </p>
+                <p className="text-sm md:text-base text-gray-200">
+                  Atur waktu reminder sesuai kebutuhan Anda dengan mudah.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3 md:gap-y-5 bg-gray-100 p-4 md:p-6 rounded-md shadow-2xl">
+              <p className="text-2xl md:text-3xl text-primary">💬</p>
+              <div className="flex flex-col">
+                <p className="text-base md:text-lg font-medium text-gray-600 leading-loose">
+                  Notifikasi Real-Time
+                </p>
+                <p className="text-sm md:text-base text-gray-500">
+                  Terima pengingat langsung dari WhatsApp dan Telegram aplikasi
+                  yang Anda gunakan setiap hari.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3 md:gap-y-5 bg-primary p-4 md:p-6 rounded-md shadow-2xl">
+              <p className="text-2xl md:text-3xl text-primary">📅</p>
+              <div className="flex flex-col">
+                <p className="text-base md:text-lg font-medium text-gray-50 leading-loose">
+                  Integrasi dengan Kalender
+                </p>
+                <p className="text-sm md:text-base text-gray-300">
+                  Hubungkan dengan kalender digital agar semua jadwal tetap
+                  teratur.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

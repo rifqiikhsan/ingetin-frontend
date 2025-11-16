@@ -5,17 +5,15 @@ export default async function Home() {
     <div className="pt-20">
       {/* Hero Section */}
       <section
-        className="hero mx-auto max-w-6xl py-6 lg:py-12 px-4 mt-6"
+        className="hero mx-auto max-w-7xl py-6 lg:py-20 px-4 mt-6"
         id="home"
       >
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between text-center lg:text-left gap-y-12 lg:gap-y-0">
           <div className="flex flex-col gap-y-10 w-full lg:w-1/2">
+            <p className="hidden lg:block w-fit bg-white text-amber-900 px-4 py-2 rounded-full text-sm md:text-base font-semibold shadow-md">
+              ✨ Produktivitas Maksimal
+            </p>
             <div className="flex flex-col gap-y-3">
-              <div className="block mb-2">
-                <span className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-semibold">
-                  ✨ Produktivitas Maksimal
-                </span>
-              </div>
               <h1 className="text-gray font-['Clash_Display'] text-4xl md:text-5xl lg:text-[70px] leading-tight md:leading-tight lg:leading-none">
                 Jangan Lewatkan <br className="hidden md:block" />
                 Deadline Lagi.
@@ -111,7 +109,6 @@ export default async function Home() {
               alt="Ilustrasition Image"
               width={550}
               height={550}
-              className="object-cover w-full max-w-[550px] h-auto"
               priority
             />
           </div>
@@ -120,14 +117,14 @@ export default async function Home() {
 
       {/* Fitur Section */}
       <section
-        className="feature mx-auto max-w-6xl py-6 lg:py-12 px-4"
+        className="feature mx-auto max-w-7xl py-6 lg:py-12 px-4"
         id="features"
       >
         <div className="flex flex-col py-8 md:py-12">
-          <h3 className="text-base md:text-lg text-primary font-medium pb-2">
+          <h3 className="text-base md:text-lg text-primary font-medium">
             Fitur Unggulan Ingetin
           </h3>
-          <h2 className="text-xl md:text-3xl font-medium leading-relaxed text-gray-700 mb-6 md:mb-10">
+          <h2 className="font-['Clash_Display'] text-xl md:text-3xl font-medium leading-relaxed text-gray-700 mb-6 md:mb-10">
             Fitur yang Membuat Hidup Anda Jauh Lebih Mudah.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-x-16">
@@ -142,7 +139,7 @@ export default async function Home() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-y-3 md:gap-y-5 bg-gray-100 p-4 md:p-6 rounded-md shadow-2xl">
+            <div className="flex flex-col gap-y-3 md:gap-y-5 bg-gray-100 p-4 md:p-6 rounded-md shadow-2xl outline-gray-200 outline-2">
               <p className="text-2xl md:text-3xl text-primary">💬</p>
               <div className="flex flex-col">
                 <p className="text-base md:text-lg font-medium text-gray-600 leading-loose">

@@ -435,6 +435,78 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Contacts Section */}
+      <section id="contact" className="py-20 px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left Content */}
+            <div>
+              <h2 className="text-3xl font-semibold text-primary">
+                Hubungi Kami
+              </h2>
+              <p className="mt-4 text-gray-500 leading-relaxed">
+                Ada pertanyaan seputar Ingetin, fitur premium, atau kendala
+                teknis? Tim kami siap membantu Anda mengoptimalkan produktivitas
+                harian Anda.
+              </p>
+            </div>
+
+            {/* Right Content: Contact Cards */}
+            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Collaborate */}
+              <div className="rounded-2xl bg-primary p-6 shadow-lg">
+                <h3 className="text-white font-semibold">Kolaborasi</h3>
+                <a
+                  href="mailto:collab@ingetin.app"
+                  className="mt-3 block text-amber-400 hover:underline"
+                >
+                  collab@ingetin.app
+                </a>
+                <p className="mt-1 text-gray-100 text-sm">+62 812-3456-7890</p>
+              </div>
+
+              {/* Media / Press */}
+              <div className="rounded-2xl bg-primary p-6 shadow-lg">
+                <h3 className="text-white font-semibold">Media & Press</h3>
+                <a
+                  href="mailto:press@ingetin.app"
+                  className="mt-3 block text-amber-400 hover:underline"
+                >
+                  press@ingetin.app
+                </a>
+                <p className="mt-1 text-gray-100 text-sm">+62 812-9876-5432</p>
+              </div>
+
+              {/* Careers */}
+              <div className="rounded-2xl bg-primary p-6 shadow-lg">
+                <h3 className="text-white font-semibold">Bantuan & Dukungan</h3>
+                <a
+                  href="mailto:support@ingetin.app"
+                  className="mt-3 block text-amber-400 hover:underline"
+                >
+                  support@ingetin.app
+                </a>
+                <p className="mt-1 text-gray-100 text-sm">+62 811-5566-7788</p>
+              </div>
+
+              {/* Location */}
+              <div className="rounded-2xl bg-primary p-6 shadow-lg">
+                <h3 className="text-white font-semibold">Lokasi</h3>
+                <a
+                  href="mailto:support@ingetin.app"
+                  className="mt-3 block text-amber-400 hover:underline"
+                >
+                  Jakarta, Indonesia
+                </a>
+                <p className="mt-1 text-gray-100 text-sm">
+                  Jakarta Selatan, DKI Jakarta, Indonesia 12510
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
